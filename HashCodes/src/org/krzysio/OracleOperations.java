@@ -4,19 +4,17 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-/**
- * @author kbarczynski
- */
-public class MySqlOperations extends DbOperations {
+public class OracleOperations extends DbOperations {
 
 	@Override
 	protected Connection getDbConnection() throws SQLException {
-		return DriverManager.getConnection("jdbc:mysql://localhost/hashcodes", "root", "");
+		return DriverManager.getConnection(
+				"jdbc:oracle:thin:@//localhost:1521/xe", "hashcodes", "root");
 	}
 
 	@Override
 	public String getDbName() {
-		return "MySql";
+		return "Oracle";
 	}
 
 }

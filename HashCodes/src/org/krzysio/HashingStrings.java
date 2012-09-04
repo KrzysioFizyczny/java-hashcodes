@@ -51,8 +51,8 @@ public class HashingStrings {
 	 */
 
 	public static void main(String[] args) {
-		MySqlOperations mySqlOperations = new MySqlOperations();
-		String lastString = mySqlOperations.getLastString();
+		DbOperations dbOperations = new OracleOperations();
+		String lastString = dbOperations.getLastString();
 
 		if (lastString == null || lastString.isEmpty()) {
 			char first = 'A' - 1;
@@ -67,14 +67,14 @@ public class HashingStrings {
 			String[] nextWords = generator.nextWords(batchSize);
 			lastString = nextWords[nextWords.length - 1];
 
-			mySqlOperations.saveNextStrings(nextWords);
+			dbOperations.saveNextStrings(nextWords);
 			System.out.println("Loop nr " + (i + 1));
 		}
 
 		long time = System.currentTimeMillis() - t1;
 		time = time / 1000L;
-		String logInfo = "LoopSize: %5d, batchSize: %7d, Multiplied: %12d, time: %6d seconds\n";
-		logInfo = String.format(logInfo, loopSize, batchSize, loopSize * batchSize, time);
+		String logInfo = "DB: %s,    LoopSize: %5d, batchSize: %7d, Multiplied: %12d, time: %6d seconds\n";
+		logInfo = String.format(logInfo, dbOperations.getDbName(), loopSize, batchSize, loopSize * batchSize, time);
 		System.out.print(logInfo);
 
 		File logFile = new File("hashcodes.log");
